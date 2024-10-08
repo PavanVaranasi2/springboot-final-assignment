@@ -33,21 +33,21 @@ jobs:
       - name: Build and analyze security
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ SONAR_TOKEN_SECURITY_SERVICE }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_SECURITY_SERVICE }}
         run: |
           cd security-service
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=pavanvaranasi2_security-service
       - name: Build and analyze hotel
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ SONAR_TOKEN_HOTEL_SERVICE }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_HOTEL_SERVICE }}
         run: |
           cd hotel-service
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=pavanvaranasi2_hotel-service
       - name: Build and analyze room
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ SONAR_TOKEN_ROOM_SERVICE }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_ROOM_SERVICE }}
         run: |
           cd room-service
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=pavanvaranasi2_room-service
