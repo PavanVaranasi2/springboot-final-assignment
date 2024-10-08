@@ -1,0 +1,46 @@
+server:
+   port:  8060
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  "http://localhost:8761/eureka/"
+
+
+management:
+  tracing:
+    sampling:
+      probability:  1.0
+
+
+spring:
+   application:
+      name:  api-gateway
+   config:
+     import: "optional:configserver:http://localhost:8088"
+   cloud:
+      gateway:
+         routes:
+           - id: security-service
+             uri: lb://security-service
+             predicates:
+              - Path=/auth/**
+
+           - id:  room-service
+             uri:  lb://room-service
+             predicates:
+               - Path=/rooms/**
+             filters:
+               - AuthenticationFilter
+
+           - id: hotel-service
+             uri: lb://hotel-service
+             predicates:
+               - Path=/hotels/**
+             filters:
+               - AuthenticationFilter
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web: DEBUG
