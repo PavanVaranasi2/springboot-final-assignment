@@ -1,23 +1,16 @@
 package com.pavan.room_service.controller;
 
-import com.pavan.room_service.exception.InvalidRoomDataException;
 import com.pavan.room_service.exception.RoomNotFoundException;
 import com.pavan.room_service.model.Room;
 import com.pavan.room_service.service.RoomService;
-import com.pavan.room_service.util.Constant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

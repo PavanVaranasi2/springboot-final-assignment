@@ -47,7 +47,7 @@ public class UserController {
     @PostMapping(Constant.TOKEN)
     public String generateUser(@RequestBody UserDTO userDTO){
         try {
-            Authentication authentication = authenticationManager.authenticate(
+            authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userDTO.getUsername(), userDTO.getPassword())
             );
             return userService.generateToken(userDTO.getUsername());

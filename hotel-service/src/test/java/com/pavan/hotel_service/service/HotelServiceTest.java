@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-public class HotelServiceTest {
+class HotelServiceTest {
 
     @Mock
     private HotelRepository hotelRepository;
@@ -31,13 +31,13 @@ public class HotelServiceTest {
     private Hotel hotel;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
         hotel = new Hotel(1, "Test Hotel", "Location", "1234567890", "test@example.com", 5, "A nice hotel", 10, "Wi-Fi, Breakfast", null);
     }
 
     @Test
-    public void testAddHotel_Success() {
+    void testAddHotel_Success() {
         when(hotelRepository.save(any(Hotel.class))).thenReturn(hotel);
         Hotel savedHotel = hotelService.addHotel(hotel);
         assertNotNull(savedHotel);
@@ -46,7 +46,7 @@ public class HotelServiceTest {
     }
 
     @Test
-    public void testAddHotel_InvalidName_Null() {
+    void testAddHotel_InvalidName_Null() {
         Hotel invalidHotel = new Hotel();
         invalidHotel.setName(null); // Invalid name (null)
 
@@ -55,7 +55,7 @@ public class HotelServiceTest {
     }
 
     @Test
-    public void testAddHotel_InvalidName_Empty() {
+    void testAddHotel_InvalidName_Empty() {
         Hotel invalidHotel = new Hotel();
         invalidHotel.setName(""); // Invalid name (empty string)
 
@@ -64,7 +64,7 @@ public class HotelServiceTest {
     }
 
     @Test
-    public void testFindAll() {
+    void testFindAll() {
         when(hotelRepository.findAll()).thenReturn(Arrays.asList(hotel));
         List<Hotel> hotels = hotelService.findAll();
         assertNotNull(hotels);
@@ -73,7 +73,7 @@ public class HotelServiceTest {
     }
 
     @Test
-    public void testFindById_Success() {
+    void testFindById_Success() {
         when(hotelRepository.findById(anyInt())).thenReturn(Optional.of(hotel));
         Hotel foundHotel = hotelService.findById(1);
         assertNotNull(foundHotel);
@@ -81,14 +81,14 @@ public class HotelServiceTest {
     }
 
     @Test
-    public void testFindById_NotFound() {
+    void testFindById_NotFound() {
         when(hotelRepository.findById(anyInt())).thenReturn(Optional.empty());
         Exception exception = assertThrows(HotelNotFoundException.class, () -> hotelService.findById(1));
         assertEquals(Constant.printHotelNotFoundExceptionMessage(1), exception.getMessage());
     }
 
     @Test
-    public void testUpdateHotel_Success() {
+    void testUpdateHotel_Success() {
         when(hotelRepository.findById(anyInt())).thenReturn(Optional.of(hotel));
         when(hotelRepository.save(any(Hotel.class))).thenReturn(hotel);
         Hotel updatedHotel = new Hotel(1, "Updated Hotel", "Updated Location", "0987654321", "updated@example.com", 4, "Updated description", 5, "Wi-Fi, Breakfast", null);
@@ -98,14 +98,14 @@ public class HotelServiceTest {
     }
 
     @Test
-    public void testUpdateHotel_NotFound() {
+    void testUpdateHotel_NotFound() {
         when(hotelRepository.findById(anyInt())).thenReturn(Optional.empty());
         Exception exception = assertThrows(HotelNotFoundException.class, () -> hotelService.updateHotel(1, hotel));
         assertEquals(Constant.printHotelNotFoundExceptionMessage(1), exception.getMessage());
     }
 
     @Test
-    public void testUpdateHotel_InvalidName_Null() {
+    void testUpdateHotel_InvalidName_Null() {
         when(hotelRepository.findById(anyInt())).thenReturn(Optional.of(hotel));
 
         Hotel updatedHotel = new Hotel();
@@ -116,7 +116,7 @@ public class HotelServiceTest {
     }
 
     @Test
-    public void testUpdateHotel_InvalidName_Empty() {
+    void testUpdateHotel_InvalidName_Empty() {
         when(hotelRepository.findById(anyInt())).thenReturn(Optional.of(hotel));
 
         Hotel updatedHotel = new Hotel();
@@ -127,7 +127,7 @@ public class HotelServiceTest {
     }
 
     @Test
-    public void testPartiallyUpdateHotel_Success() {
+    void testPartiallyUpdateHotel_Success() {
         when(hotelRepository.findById(anyInt())).thenReturn(Optional.of(hotel));
         when(hotelRepository.save(any(Hotel.class))).thenReturn(hotel);
         Hotel partialUpdateHotel = new Hotel();
@@ -138,14 +138,14 @@ public class HotelServiceTest {
     }
 
     @Test
-    public void testPartiallyUpdateHotel_NotFound() {
+    void testPartiallyUpdateHotel_NotFound() {
         when(hotelRepository.findById(anyInt())).thenReturn(Optional.empty());
         Exception exception = assertThrows(HotelNotFoundException.class, () -> hotelService.partiallyUpdateHotel(1, hotel));
         assertEquals(Constant.printHotelNotFoundExceptionMessage(1), exception.getMessage());
     }
 
     @Test
-    public void testPartiallyUpdateHotel_InvalidName() {
+    void testPartiallyUpdateHotel_InvalidName() {
         when(hotelRepository.findById(anyInt())).thenReturn(Optional.of(hotel));
 
         Hotel partialUpdateHotel = new Hotel();
@@ -158,7 +158,7 @@ public class HotelServiceTest {
     }
 
     @Test
-    public void testPartiallyUpdateHotel_EmptyName() {
+    void testPartiallyUpdateHotel_EmptyName() {
         when(hotelRepository.findById(anyInt())).thenReturn(Optional.of(hotel));
 
         Hotel partialUpdateHotel = new Hotel();
@@ -171,14 +171,14 @@ public class HotelServiceTest {
     }
 
     @Test
-    public void testDeleteHotel_Success() {
+    void testDeleteHotel_Success() {
         when(hotelRepository.findById(anyInt())).thenReturn(Optional.of(hotel));
         hotelService.deleteHotel(1);
         verify(hotelRepository, times(1)).delete(hotel);
     }
 
     @Test
-    public void testDeleteHotel_NotFound() {
+    void testDeleteHotel_NotFound() {
         when(hotelRepository.findById(anyInt())).thenReturn(Optional.empty());
         Exception exception = assertThrows(HotelNotFoundException.class, () -> hotelService.deleteHotel(1));
         assertEquals(Constant.printHotelNotFoundExceptionMessage(1), exception.getMessage());

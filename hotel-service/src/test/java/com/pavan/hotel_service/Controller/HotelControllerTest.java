@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class HotelControllerTest {
+class HotelControllerTest {
 
     private MockMvc mockMvc;
 
@@ -39,7 +39,7 @@ public class HotelControllerTest {
     private Hotel hotel;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(hotelController).build();
 
@@ -57,7 +57,7 @@ public class HotelControllerTest {
     }
 
     @Test
-    public void testFindAll() throws Exception {
+    void testFindAll() throws Exception {
         List<Hotel> hotels = Arrays.asList(hotel);
         when(hotelService.findAll()).thenReturn(hotels);
 
@@ -71,7 +71,7 @@ public class HotelControllerTest {
     }
 
     @Test
-    public void testFindById() throws Exception {
+    void testFindById() throws Exception {
         when(hotelService.findById(1)).thenReturn(hotel);
 
         mockMvc.perform(get(Constant.HOTELS + Constant.HOTEL_BY_ID, 1)
@@ -84,7 +84,7 @@ public class HotelControllerTest {
     }
 
     @Test
-    public void testAddHotel() throws Exception {
+    void testAddHotel() throws Exception {
         when(hotelService.addHotel(any(Hotel.class))).thenReturn(hotel);
 
         mockMvc.perform(post(Constant.HOTELS)
@@ -98,7 +98,7 @@ public class HotelControllerTest {
     }
 
     @Test
-    public void testUpdateHotel() throws Exception {
+    void testUpdateHotel() throws Exception {
         when(hotelService.updateHotel(eq(1), any(Hotel.class))).thenReturn(hotel);
 
         mockMvc.perform(put(Constant.HOTELS + Constant.HOTEL_BY_ID, 1)
@@ -112,7 +112,7 @@ public class HotelControllerTest {
     }
 
     @Test
-    public void testPartiallyUpdateHotel() throws Exception {
+    void testPartiallyUpdateHotel() throws Exception {
         when(hotelService.partiallyUpdateHotel(eq(1), any(Hotel.class))).thenReturn(hotel);
 
         mockMvc.perform(patch(Constant.HOTELS + Constant.HOTEL_BY_ID, 1)
@@ -126,7 +126,7 @@ public class HotelControllerTest {
     }
 
     @Test
-    public void testDeleteHotel() throws Exception {
+    void testDeleteHotel() throws Exception {
         doNothing().when(hotelService).deleteHotel(1);
 
         mockMvc.perform(delete(Constant.HOTELS + Constant.HOTEL_BY_ID, 1)
@@ -139,7 +139,7 @@ public class HotelControllerTest {
 
 
     @Test
-    public void testFindAllWithRooms() throws Exception {
+    void testFindAllWithRooms() throws Exception {
         List<Hotel> hotels = Arrays.asList(hotel);
         when(hotelService.findAll()).thenReturn(hotels);
         when(roomClient.findByHotel(1)).thenReturn(Collections.emptyList());
