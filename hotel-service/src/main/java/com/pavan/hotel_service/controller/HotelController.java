@@ -1,4 +1,4 @@
-package com.pavan.hotel_service.Controller;
+package com.pavan.hotel_service.controller;
 
 import com.pavan.hotel_service.client.RoomClient;
 import com.pavan.hotel_service.model.Hotel;
